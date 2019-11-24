@@ -9,6 +9,7 @@ project 1 - A Random Quote Generator
 
 /*** 
  * `quotes` array 
+ * some citations and years are undefined
 ***/
 var quotes = [
   {
@@ -34,8 +35,7 @@ var quotes = [
   },  
   {
     quote: "There isn't much justice in this world. Perhaps that's why it is so satisfying to occasionally make some.", source: "Martian Manhunter", 
-    citation: "Justice League Task Force Vol 1. #1",
-    year: " "
+    citation: "Justice League Task Force Vol 1. #1"
   },
   {
     quote: "Dreams save us. Dreams lift us up and transform us. and on my soul, Iswear until my dream of a world where dignity, honor and justice becomes the reality we all share. I'll never stop fighting. Ever.", 
@@ -59,7 +59,9 @@ var quotes = [
 
 /***
  * `getRandomQuote` function
- * This function is getting random number in between 0 to array length
+ * This function is getting random number in between 0 to array length.
+ * And that number has been used as the array object position.
+ * it returns a random quote at the end.
 ***/
 function getRandomQuote () {
   let randomNumber = Math.floor(Math.random() * quotes.length);
@@ -70,14 +72,29 @@ function getRandomQuote () {
 
 /***
  * `printQuote` function
- * for printing source and quote, I added "id" names in html codes
+ * I used concatenation -Template literals- for the screen output.
+ * I had to use 'if' conditions because 'citation' and 'year' were turning as undefined. 
+ * if those are not undefined, it added the span tags to the resul concatenation. 
 ***/
 function printQuote () {
   let quote = getRandomQuote()
-  document.getElementById('quote').innerHTML = quote['quote'];
-  document.getElementById('source').innerHTML = quote['source'];
-  document.getElementById('citation').innerHTML = quote['citation'];
-  document.getElementById('year').innerHTML = quote['year'];
+  let result =
+  `
+  <p class="quote"> ${quote.quote} </p>
+  <p class="source"> ${quote.source}`
+  
+  if (quote.citation !== undefined) {
+    result += `<span class="citation"> ${quote.citation} </span>`
+  }
+
+  if (quote.year !== undefined) {
+    result += `<span class="year"> ${quote.year} </span>`
+  }
+
+  result += `</p>`
+  
+  document.getElementById('quote-box').innerHTML = result;
+ 
   return
 }
 
